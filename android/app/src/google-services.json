@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "708469820751",
+    "firebase_url": "https://avanti-fd4a9-default-rtdb.firebaseio.com",
+    "project_id": "avanti-fd4a9",
+    "storage_bucket": "avanti-fd4a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708469820751:android:039f3e75177ba071b1c93a",
+        "android_client_info": {
+          "package_name": "com.example.avanti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAotigoE-d3sqg1P1D7GZ4-_1ZOECqu6c8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,9 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unused_local_variable, avoid_print
 
-import 'package:avanti/conversion_page.dart';
 import 'package:avanti/widgets/customappbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:ussd_advanced/ussd_advanced.dart';
 
@@ -16,32 +17,55 @@ class AmountPage extends StatefulWidget {
 }
 
 class _AmountPageState extends State<AmountPage> {
-  // FormKey key = GlobalKey();
+
+late String phoneNumberKey;
   TextEditingController phNum = TextEditingController();
-
   TextEditingController amount = TextEditingController();
-makeUssdCall(String ussdCode) async {
-  var response = await UssdAdvanced.sendUssd(code:ussdCode);
-  
-}
-
-// Usage
-// makeUssdCall('*100#');
-    void makePhoneCall(String phoneNumber) async {
-    final url = 'tel:$phoneNumber';
-
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   void initState() {
-    amount.text = widget.number;
     super.initState();
+    // Load the stored phone number on page initialization
+    loadPhoneNumber();
+    amount.text = widget.number;
   }
+
+  // Function to save the phone number in shared preferences
+  void savePhoneNumber(String phoneNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    phoneNumberKey = 'phone_number_key'; // Fixed key for shared preferences
+    prefs.setString(phoneNumberKey, phoneNumber);
+  }
+
+  // Function to load the phone number from shared preferences
+  void loadPhoneNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    phoneNumberKey = 'phone_number_key'; // Fixed key for shared preferences
+    String savedPhoneNumber = prefs.getString(phoneNumberKey) ?? '';
+    setState(() {
+      phNum.text = savedPhoneNumber;
+    });
+  }
+
+  Future<void> savePhoneNumberToFirebase(String phoneNumber) async {
+    try {
+      await FirebaseFirestore.instance.collection('phoneNumber').add({
+        'pNumber': phoneNumber,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      print('Phone number saved successfully');
+    } catch (error) {
+      print('Error saving phone number: $error');
+    }
+  }
+
+  makeUssdCall(String ussdCode) async {
+    var response = await UssdAdvanced.sendUssd(code: ussdCode);
+  }
+
+
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -50,28 +74,62 @@ makeUssdCall(String ussdCode) async {
         body: Column(
           children: [
             TextField(
-                controller: phNum,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(top: 15),
-                    isDense: true,
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Phone Number: ",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lime,
-                            foregroundColor: Colors.white),
-                        child: const Text('SAVE'),
-                      ),
-                    ))),
+              controller: phNum,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(top: 15),
+                isDense: true,
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Phone Number:  ",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      savePhoneNumber(phNum.text);
+                      savePhoneNumberToFirebase(phNum.text);
+                      // phNum.clear(); // Clear the text field after saving
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lime,
+                        foregroundColor: Colors.white),
+                    child: const Text('SAVE'),
+                  ),
+                ),
+              )),
+            // TextField(
+
+            //     controller: phNum,
+            //     keyboardType: TextInputType.number,
+            //     decoration: InputDecoration(
+            //         contentPadding: const EdgeInsets.only(top: 15),
+            //         isDense: true,
+            //         prefixIcon: const Padding(
+            //           padding: EdgeInsets.all(8.0),
+            //           child: Text(
+            //             "Phone Number:  ",
+            //             style: TextStyle(fontSize: 16),
+            //           ),
+            //         ),
+            //         suffixIcon: Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: ElevatedButton(
+            //             onPressed: () {
+            //               savePhoneNumberToFirebase(phNum.text);
+            //                 // phNum.clear();
+
+            //             },
+            //             style: ElevatedButton.styleFrom(
+            //                 backgroundColor: Colors.lime,
+            //                 foregroundColor: Colors.white),
+            //             child: const Text('SAVE'),
+            //           ),
+            //         ))),
             TextField(
               onChanged: (val) {
                 setState(() {

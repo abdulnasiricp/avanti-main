@@ -12,7 +12,7 @@ class BuyAirtime extends StatelessWidget {
       appBar: CustomApp("Buy Airtime - 15% Discount!!"),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(10),
           child: Column(children: [
             const Text(
               "Note: Zero transaction fees and you can also use Fuliza to but the airtime",
@@ -35,7 +35,7 @@ class BuyAirtime extends StatelessWidget {
               child: Container(
                 height: 45,
                 width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 25),
+                margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                     color: Colors.lime,
                     borderRadius: BorderRadius.circular(25)),
@@ -58,7 +58,7 @@ class BuyAirtime extends StatelessWidget {
                     subtitle: 'Pay: Ksh ${10 * .85}',
                     function: () {}),
                 const SizedBox(
-                  width: 35,
+                  width: 20,
                 ),
                 Buy(
                     number: "20",
@@ -75,7 +75,7 @@ class BuyAirtime extends StatelessWidget {
                     subtitle: 'Pay: Ksh ${50 * .85}',
                     function: () {}),
                 const SizedBox(
-                  width: 35,
+                 width: 20,
                 ),
                 Buy(
                     number: "100",
@@ -92,7 +92,7 @@ class BuyAirtime extends StatelessWidget {
                     subtitle: 'Pay: Ksh ${200 * .85}',
                     function: () {}),
                 const SizedBox(
-                  width: 35,
+                   width: 20,
                 ),
                 Buy(
                     number: "500",
