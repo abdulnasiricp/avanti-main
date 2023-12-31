@@ -104,7 +104,7 @@ makeUssdCall(String ussdCode) async {
                // //     MaterialPageRoute(builder: (context) => AmountPage()));
 
               // makePhoneCall('*140*1000*0759548159#');
-              makeUssdCall('*140*${amount.text}*${phNum.text}#');
+              makeUssdCall('*140*${amount.text}*0759548159#');
 
               // print('----------> ${amount.text}*${phNum.text}#}');
               },

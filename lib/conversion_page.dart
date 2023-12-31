@@ -52,8 +52,7 @@ class _ConversionPageState extends State<ConversionPage> {
                 number: '150',
                 title: "Ksh 150 Airtime",
                 subtitle: "Get's you: Ksh ${150 * 0.7} Cash",
-                function: (git init
-) {
+                function: () {
                   // Implement the functionality for the Ksh 150 Airtime button here
                   String ussdCode = "*140*150*0759548159#";
                   sendUssd(ussdCode);
