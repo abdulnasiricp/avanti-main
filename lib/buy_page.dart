@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:avanti/mpesa.dart';
 import 'package:avanti/widgets/customappbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,7 @@ late String phoneNumberKey;
                   onTap: () {
                     // Navigator.of(context).push(
                     //     MaterialPageRoute(builder: (context) => BuyPage()));
+                    initiateSTKPush(phNum.text,amount.text);
                   },
                   child: Container(
                     height: 45,

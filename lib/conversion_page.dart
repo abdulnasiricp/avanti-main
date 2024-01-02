@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unnecessary_string_interpolations
 
 import 'package:avanti/amount_page.dart';
 import 'package:avanti/widgets/convert.dart';
