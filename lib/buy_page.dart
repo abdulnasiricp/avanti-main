@@ -1,7 +1,9 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'package:avanti/mpesa.dart';
 import 'package:avanti/widgets/customappbar.dart';
+import 'package:avanti/widgets/models/mpesaResponse.dart';
+import 'package:avanti/widgets/stkpush.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,10 +131,12 @@ late String phoneNumberKey;
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: ()async {
                     // Navigator.of(context).push(
                     //     MaterialPageRoute(builder: (context) => BuyPage()));
-                    initiateSTKPush(phNum.text,amount.text);
+                    // initiateSTKPush(phNum.text,amount.text);
+                    final MpesaResponse mpesaResponse =
+        await FlutterMpesaSTK("F6P9PiFMmByhDbBSN3vr1E6hmeUWOy6g", "XJQYRT1JtjP0xKKG", "", "6569467", "https://mydomain.com/pat", "").stkPush(Mpesa(amount.text,phNum.text, ));
                   },
                   child: Container(
                     height: 45,
